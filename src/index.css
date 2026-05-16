@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background: #ede8de;
+}
+
+body {
+  margin: 0;
+}
+
+@layer components {
+  .toolbar-button {
+    @apply inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50;
+  }
+
+  .mobile-section-divider {
+    @apply relative;
+  }
+}
+
+@media (max-width: 1023px) {
+  .mobile-section-divider::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.9rem;
+    left: 0;
+    height: 1px;
+    background-image: repeating-linear-gradient(
+      to right,
+      rgb(255 255 255 / 1) 0,
+      rgb(255 255 255 / 1) 12px,
+      transparent 12px,
+      transparent 20px
+    );
+    content: "";
+  }
+}
