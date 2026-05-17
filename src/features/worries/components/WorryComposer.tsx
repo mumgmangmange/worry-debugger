@@ -13,7 +13,7 @@ export function WorryComposer({ draft, onDraftChange, onSubmit }: WorryComposerP
     <div className="rounded-lg border border-white bg-white p-5 shadow-sm">
       <div className="flex items-center gap-2">
         <Plus size={19} />
-        <h2 className="text-lg font-bold">고민 입력</h2>
+        <h2 className="text-lg font-bold">걱정 입력</h2>
       </div>
       <textarea
         className="mt-4 h-32 w-full resize-none rounded-lg border border-slate-200 bg-[#F9F7F2] p-3 text-sm outline-none focus:border-slate-700"

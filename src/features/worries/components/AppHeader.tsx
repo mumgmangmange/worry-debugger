@@ -1,5 +1,5 @@
 import { type ChangeEvent, type RefObject } from "react";
-import { Download, FileUp, RotateCcw } from "lucide-react";
+import { Download, FileUp, MessageSquarePlus, RotateCcw } from "lucide-react";
 
 interface AppHeaderProps {
   fileInputRef: RefObject<HTMLInputElement | null>;
@@ -7,9 +7,10 @@ interface AppHeaderProps {
   onExport: () => void;
   onImport: (file: File) => void;
   onResetDemo: () => void;
+  onOpenFeedback: () => void;
 }
 
-export function AppHeader({ fileInputRef, onGoHome, onExport, onImport, onResetDemo }: AppHeaderProps) {
+export function AppHeader({ fileInputRef, onGoHome, onExport, onImport, onResetDemo, onOpenFeedback }: AppHeaderProps) {
   const handleImport = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -23,9 +24,13 @@ export function AppHeader({ fileInputRef, onGoHome, onExport, onImport, onResetD
       <div className="mx-auto flex max-w-[1600px] flex-col gap-5 px-5 py-5 md:flex-row md:items-center md:justify-between lg:px-8">
         <button type="button" className="text-left" onClick={onGoHome} aria-label="메인 화면으로 이동">
           <p className="text-sm font-bold text-[#2D6A4F]">Worry Debugger</p>
-          <h1 className="mt-1 text-2xl font-extrabold tracking-tight md:text-3xl">고민 디버거</h1>
+          <h1 className="mt-1 text-2xl font-extrabold tracking-tight md:text-3xl">걱정 디버거</h1>
         </button>
         <div className="flex flex-wrap items-center gap-2">
+          <button className="toolbar-button" type="button" onClick={onOpenFeedback}>
+            <MessageSquarePlus size={18} />
+            문의/개선사항
+          </button>
           <button className="toolbar-button" type="button" onClick={onExport}>
             <Download size={18} />
             내보내기

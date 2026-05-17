@@ -33,14 +33,14 @@ export function WorryBoard({
     <section className="mobile-section-divider min-w-0 rounded-lg border border-white bg-white p-5 shadow-sm">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <h2 className="text-xl font-bold">고민 보드</h2>
+          <h2 className="text-xl font-bold">걱정 보드</h2>
           <p className="mt-1 text-sm text-slate-500">상태별로 옮기고, 완료하거나 백업할 수 있습니다.</p>
         </div>
         <div className="flex h-11 items-center gap-2 rounded-lg border border-slate-200 bg-[#F9F7F2] px-3 md:w-72">
           <Search size={17} className="text-slate-400" />
           <input
             className="w-full bg-transparent text-sm outline-none"
-            placeholder="고민 또는 메모 검색"
+            placeholder="걱정 또는 메모 검색"
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
           />

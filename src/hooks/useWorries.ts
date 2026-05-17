@@ -52,7 +52,7 @@ export function useWorries() {
 
   const addWorry = () => {
     if (!draft.title.trim()) {
-      setNotice("고민을 한 문장 이상 입력해주세요.");
+      setNotice("걱정을 한 문장 이상 입력해주세요.");
       return;
     }
 
@@ -65,7 +65,7 @@ export function useWorries() {
     setWorries((current) => [worry, ...current]);
     setDraft(emptyDraft);
     setSelectedId(worry.id);
-    setNotice("새 고민을 저장했습니다.");
+    setNotice("새 걱정을 저장했습니다.");
   };
 
   const updateStatus = (id: string, status: WorryStatus) => {

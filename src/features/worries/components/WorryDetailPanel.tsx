@@ -40,7 +40,7 @@ function WorryDetail({
     <div>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-sm font-bold text-slate-500">선택한 고민</p>
+          <p className="text-sm font-bold text-slate-500">선택한 걱정</p>
           <h2 className="mt-2 text-xl font-extrabold leading-tight">{worry.title}</h2>
         </div>
         <Badge>{worry.category}</Badge>
