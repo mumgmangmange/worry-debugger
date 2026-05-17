@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { seedWorries, worryStatuses } from "../constants/worries";
+import { seedWorries } from "../constants/worries";
 import type { WorryDraft, WorryItem, WorryStatus } from "../types";
 import { createWorry, loadWorries, mergeWorries, parseBackupFile, saveWorries } from "../lib/worryStorage";
-import { defaultNote, isToday } from "../utils/worries";
+import { filterWorries, getWorryMetrics, groupWorriesByStatus } from "../utils/worryFilters";
+import { defaultNote } from "../utils/worries";
 
 const emptyDraft: WorryDraft = {
   title: "",
@@ -27,28 +28,10 @@ export function useWorries() {
   }, [worries]);
 
   const selectedWorry = worries.find((worry) => worry.id === selectedId) ?? worries[0] ?? null;
-  const todayCount = worries.filter((worry) => isToday(worry.createdAt)).length;
-  const completedCount = worries.filter((worry) => worry.completedAt).length;
-  const actionCount = worries.filter((worry) => worry.status === "실행").length;
+  const metrics = useMemo(() => getWorryMetrics(worries), [worries]);
 
-  const filteredWorries = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-
-    return worries.filter((worry) => {
-      const matchesCategory = categoryFilter === "전체" || worry.category === categoryFilter;
-      const matchesQuery =
-        normalizedQuery.length === 0 ||
-        worry.title.toLowerCase().includes(normalizedQuery) ||
-        worry.note.toLowerCase().includes(normalizedQuery);
-
-      return matchesCategory && matchesQuery;
-    });
-  }, [categoryFilter, query, worries]);
-
-  const columns = worryStatuses.map((status) => ({
-    ...status,
-    data: filteredWorries.filter((worry) => worry.status === status.value),
-  }));
+  const filteredWorries = useMemo(() => filterWorries(worries, query, categoryFilter), [categoryFilter, query, worries]);
+  const columns = useMemo(() => groupWorriesByStatus(filteredWorries), [filteredWorries]);
 
   const addWorry = () => {
     if (!draft.title.trim()) {
@@ -132,6 +115,24 @@ export function useWorries() {
     setNotice("메인 화면으로 이동했습니다.");
   };
 
+  const updateSelectedStatus = (status: WorryStatus) => {
+    if (selectedWorry) {
+      updateStatus(selectedWorry.id, status);
+    }
+  };
+
+  const completeSelectedWorry = () => {
+    if (selectedWorry) {
+      completeWorry(selectedWorry.id);
+    }
+  };
+
+  const deleteSelectedWorry = () => {
+    if (selectedWorry) {
+      deleteWorry(selectedWorry.id);
+    }
+  };
+
   return {
     worries,
     draft,
@@ -140,12 +141,7 @@ export function useWorries() {
     query,
     categoryFilter,
     notice,
-    metrics: {
-      total: worries.length,
-      today: todayCount,
-      action: actionCount,
-      completed: completedCount,
-    },
+    metrics,
     setDraft,
     setSelectedId,
     setQuery,
@@ -154,6 +150,9 @@ export function useWorries() {
     updateStatus,
     completeWorry,
     deleteWorry,
+    updateSelectedStatus,
+    completeSelectedWorry,
+    deleteSelectedWorry,
     exportBackup,
     importBackupFile,
     resetDemo,

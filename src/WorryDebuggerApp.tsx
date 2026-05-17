@@ -5,23 +5,14 @@ import { FeedbackDialog } from "./features/worries/components/FeedbackDialog";
 import { WorryBoard } from "./features/worries/components/WorryBoard";
 import { WorryDetailPanel } from "./features/worries/components/WorryDetailPanel";
 import { WorrySidebar } from "./features/worries/components/WorrySidebar";
+import { useFeedbackForm } from "./hooks/useFeedbackForm";
 import { useWorries } from "./hooks/useWorries";
-
-const feedbackFormUrl = import.meta.env.VITE_FEEDBACK_FORM_URL;
 
 export default function WorryDebuggerApp() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const worries = useWorries();
-
-  const openFeedback = () => {
-    if (feedbackFormUrl) {
-      window.open(feedbackFormUrl, "_blank", "noopener,noreferrer");
-      return;
-    }
-
-    setFeedbackOpen(true);
-  };
+  const openFeedback = useFeedbackForm(() => setFeedbackOpen(true));
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F4F1EA] text-slate-900">
@@ -56,21 +47,9 @@ export default function WorryDebuggerApp() {
 
         <WorryDetailPanel
           worry={worries.selectedWorry}
-          onChangeStatus={(status) => {
-            if (worries.selectedWorry) {
-              worries.updateStatus(worries.selectedWorry.id, status);
-            }
-          }}
-          onComplete={() => {
-            if (worries.selectedWorry) {
-              worries.completeWorry(worries.selectedWorry.id);
-            }
-          }}
-          onDelete={() => {
-            if (worries.selectedWorry) {
-              worries.deleteWorry(worries.selectedWorry.id);
-            }
-          }}
+          onChangeStatus={worries.updateSelectedStatus}
+          onComplete={worries.completeSelectedWorry}
+          onDelete={worries.deleteSelectedWorry}
         />
       </main>
 

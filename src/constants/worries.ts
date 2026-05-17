@@ -25,9 +25,15 @@ export const statusIcon: Record<WorryStatus, LucideIcon> = {
 };
 
 export const seedWorries: WorryItem[] = [
-  createSeedWorry("seed-1", "예시) 할 일이 너무 많아서 뭐부터 해야 할지 모르겠다", "일", "실행", "오늘 꼭 해야 할 일 3개만 적기"),
+  createSeedWorry(
+    "seed-1",
+    "예시) 할 일이 너무 많아서 뭐부터 해야 할지 모르겠다",
+    "일",
+    "실행",
+    "오늘 꼭 해야 할 일 3개만 적기",
+  ),
   createSeedWorry("seed-2", "예시) 주말 약속을 잡을지 말지 걱정된다", "관계", "보류", "금요일 컨디션 보고 답장하기"),
-  createSeedWorry("seed-3", "예시) 돈을 조금 더 아껴야 할 것 같다", "돈", "기록", "이번 달 고정지출 먼저 확인하기")
+  createSeedWorry("seed-3", "예시) 돈을 조금 더 아껴야 할 것 같다", "돈", "기록", "이번 달 고정지출 먼저 확인하기"),
 ];
 
 function createSeedWorry(
